@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function sseTest(url){
+        var sse = new EventSource(url);
+
+        // 建立连接时触发
+        sse.onopen = function(){
+            console.log('连接已建立~');
+        };
+
+        // 处理从服务器收到的数据
+        sse.onmessage = function(event){
+            console.log('从服务器接收到的数据：' + event.data);
+            if ('服务器出现问题' === event.data){
+                //sse.close();
+            }
+        };
+
+        // 连接中断时触发
+        sse.onerror = function(){
+            console.log('连接已中断，请稍后，我可能会重连哦~');
+        };
+    }
+
+    sseTest('http://127.0.0.1:9001');
+</script>
+</body>
+</html>
